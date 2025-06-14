@@ -371,6 +371,64 @@ cartTotal() {
                         !this.phoneError &&
                         this.cartItems.length > 0;
                 },
+                async checkout() {
+                        if (!this.isCheckoutValid) return;
+
+                        this.isCheckingOut = true;
+                        const orderData = {
+                            name: this.customerName,
+                            phoneNumber: this.customerPhone,
+                            lessonIds: this.cartItems.map(item => item._id),
+                            spaces: this.cartItems.length
+                        };
+
+                        try {
+                            await this.saveOrder(orderData);
+                            
+                            for (const item of this.cartItems) {
+                                const lessonToUpdate = this.lessons.find(l => l._id === item._id);
+                                if (lessonToUpdate) {
+                                    await this.updateLessonSpaces(
+                                        item._id,
+                                        lessonToUpdate.spaces
+                                    );
+                                }
+                            }
+                            
+                            await this.fetchAllLessons();
+                            
+                            alert(`Thank you ${this.customerName}! Your order has been submitted successfully.\nTotal: $${this.cartTotal}`);
+                            this.cartItems = [];
+                            this.customerName = '';
+                            this.customerPhone = '';
+                            this.showCart = false;
+                        } catch (error) {
+                            console.error('Error during checkout:', error);
+                            alert('There was an error processing your order. Please try again.');
+                        } finally {
+                            this.isCheckingOut = false;
+                        }
+                    },
+                                async saveOrder(orderData) {
+                    try {
+                        const response = await fetch(`${this.baseURL}/api/orders`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(orderData)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Failed to save order');
+                        }
+
+                        return await response.json();
+                    } catch (error) {
+                        console.error('Error saving order:', error);
+                        throw error;
+                    }
+                },
     </script>
 </body>
 </html>
