@@ -86,6 +86,74 @@
         </div>
     </section>
 
+    <main class="max-w-7xl mx-auto px-4">
+        <div v-if="!showCart">
+            <div class="mb-10 bg-white p-8 rounded-3xl shadow-xl border-4 border-teal-200">
+                <h2 class="text-2xl font-extrabold mb-6 text-white flex items-center gap-2 uppercase tracking-widest"><i class="fas fa-sort mr-2 text-yellow-400"></i>Sort Lessons</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-black-300 text-lg font-extrabold mb-3 uppercase">
+                            Sort by:
+                        </label>
+                        <select 
+                            v-model="sortKey"
+                            class="border rounded p-2 w-full">
+                            <option value="subject">Subject</option>
+                            <option value="location">Location</option>
+                            <option value="price">Price</option>
+                            <option value="spaces">Available Spaces</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-black-300 text-lg font-extrabold mb-3 uppercase">
+                            Order:
+                        </label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center text-black font-bold">
+                                <input 
+                                    type="radio" 
+                                    v-model="sortOrder" 
+                                    value="asc"
+                                    class="mr-2 accent-blue-500">
+                                Ascending
+                                <i class="fas fa-arrow-up ml-1 text-blue-400"></i>
+                            </label>
+                            <label class="flex items-center text-black font-bold">
+                                <input 
+                                    type="radio" 
+                                    v-model="sortOrder" 
+                                    value="desc"
+                                    class="mr-2 accent-pink-500">
+                                Descending
+                                <i class="fas fa-arrow-down ml-1 text-pink-400"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block text-black-300 text-lg font-extrabold mb-3 uppercase">
+                        Search lessons:
+                    </label>
+                    <input 
+                        type="text" 
+                        v-model="searchQuery" 
+                        placeholder="Search by any term..."
+                        class="border-2 border-blue-700 rounded-lg p-3 w-full bg-white text-black font-bold placeholder-gray-500"
+                    >
+                </div>
+                <div class="mt-4">
+                    <p class="text-base text-gray-400 font-bold">
+                        Currently sorting by: 
+                        <span class="text-yellow-400">{{sortKey}}</span> 
+                        in 
+                        <span class="text-pink-400">{{sortOrder === 'asc' ? 'ascending' : 'descending'}}</span> 
+                        order
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
    </div> 
 </body>
 </html>
