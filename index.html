@@ -151,6 +151,40 @@
                     </p>
                 </div>
             </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div 
+                    v-for="lesson in sortedLessons"
+                    class="bg-gradient-to-br from-white via-sky-50 to-purple-100 rounded-2xl shadow-lg border-2 border-teal-200 hover:shadow-2xl hover:border-purple-300 transition-all duration-200 overflow-hidden flex flex-col items-center text-center p-8 group">
+                    <div class="flex flex-col items-center w-full mb-4">
+                        <img :src="`${baseURL}${lesson.icon}`" :alt="lesson.subject" class="w-16 h-16 object-cover border-2 border-teal-300 rounded-full mb-3 shadow-md">
+                        <span 
+                            :class="['px-4 py-1 rounded-full text-base font-bold tracking-wide border', 
+                                lesson.spaces > 3 ? 'bg-teal-100 text-teal-900 border-teal-300' : 
+                                lesson.spaces > 0 ? 'bg-yellow-100 text-yellow-900 border-yellow-300' : 
+                                'bg-red-100 text-red-700 border-red-300']">
+                            {{lesson.spaces}} left
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-900">{{lesson.subject}}</h3>
+                    <div class="space-y-1 text-gray-600 mb-4">
+                        <p>
+                            <i class="fas fa-map-marker-alt mr-2 text-teal-400"></i>
+                            {{lesson.location}}
+                        </p>
+                        <p>
+                            <i class="fas fa-dollar-sign mr-2 text-purple-400"></i>
+                            {{lesson.price}}
+                        </p>
+                    </div>
+                    <button 
+                        @click="addToCart(lesson)"
+                        :disabled="lesson.spaces === 0"
+                        class="mt-auto w-full bg-gradient-to-r from-teal-400 to-purple-400 text-black px-6 py-2 rounded-full font-bold shadow hover:from-purple-400 hover:to-teal-400 hover:text-teal-900 transition-all duration-200 disabled:opacity-40">
+                        {{lesson.spaces === 0 ? 'Sold Out' : 'Add to Cart'}}
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
