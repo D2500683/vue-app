@@ -221,6 +221,44 @@
                     </div>
                 </div>
 
+                <div class="border-t-2 border-blue-700 pt-8">
+                    <h3 class="text-2xl font-extrabold mb-6 text-white uppercase tracking-widest">Customer Information</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-gray-300 text-lg font-extrabold mb-3 uppercase">
+                                Name
+                            </label>
+                            <input 
+                                type="text" 
+                                v-model="customerName"
+                                @input="validateName"
+                                class="border-2 border-blue-700 rounded-lg p-4 w-full bg-black text-white font-bold placeholder-gray-500"
+                                :class="{'border-red-500': nameError}"
+                                placeholder="Enter your name"
+                            >
+                            <p v-if="nameError" class="text-red-400 text-base mt-1 font-bold">
+                                Name must contain letters only
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 text-lg font-extrabold mb-3 uppercase">
+                                Phone
+                            </label>
+                            <input 
+                                type="tel" 
+                                v-model="customerPhone"
+                                @input="validatePhone"
+                                class="border-2 border-blue-700 rounded-lg p-4 w-full bg-black text-white font-bold placeholder-gray-500"
+                                :class="{'border-red-500': phoneError}"
+                                placeholder="Enter your phone number"
+                            >
+                            <p v-if="phoneError" class="text-red-400 text-base mt-1 font-bold">
+                                Phone must contain numbers only
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
