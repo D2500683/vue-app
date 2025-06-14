@@ -458,6 +458,34 @@ cartTotal() {
         throw error;
     }
 }
+},
+            watch: {
+                searchQuery(newQuery) {
+                    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+                    if (!newQuery) {
+                        this.searchResults = [];
+                        return;
+                    }
+                    this.isSearching = true;
+                    // Debounce API call
+                    this.searchTimeout = setTimeout(async () => {
+                        try {
+                            const response = await fetch(`${this.baseURL}/api/search?q=${encodeURIComponent(newQuery)}`);
+                            if (!response.ok) throw new Error('Search failed');
+                            const data = await response.json();
+                            this.searchResults = data;
+                        } catch (e) {
+                            this.searchResults = [];
+                        } finally {
+                            this.isSearching = false;
+                        }
+                    }, 300); // 300ms debounce
+                }
+            },
+            created() {
+                this.fetchAllLessons();
+            }
+        });
     </script>
 </body>
 </html>
