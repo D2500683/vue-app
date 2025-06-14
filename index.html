@@ -43,7 +43,34 @@
 }
     </style>
 </head>
-<body>
+<body class="bg-gradient-to-br from-[#f8fafc] to-[#e0e7ef] min-h-screen">
+   <div id="app" class="bg-gradient-to-br from-[#f8fafc] to-[#e0e7ef] min-h-screen">
+
+    <div v-if="isLoading || isCheckingOut" class="fixed inset-0 overlay flex items-center justify-center bg-black bg-opacity-90 z-50">
+        <div class="text-center">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-white font-bold text-xl tracking-widest">
+                {{ isCheckingOut ? 'Processing your order...' : 'Loading lessons...' }}
+            </p>
+        </div>
+    </div>
+
+    <nav class="bg-gradient-to-r from-[#e0e7ef] to-[#f8fafc] shadow-2xl px-6 py-5 text-[#232946] border-b-4 border-blue-100">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-school text-yellow-400 text-4xl drop-shadow-lg"></i>
+                <span class="text-3xl font-extrabold tracking-tight uppercase text-[#232946]">Daniel's Shop</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button @click="toggleCart" :disabled="cartItems.length === 0" class="relative bg-gradient-to-r from-blue-700 to-indigo-900 text-white px-6 py-3 rounded-full font-extrabold shadow-xl hover:from-yellow-400 hover:to-yellow-600 hover:text-black transition-all text-lg disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed border-2 border-blue-700">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    <span>{{ showCart ? 'View Lessons' : 'View Cart' }}</span>
+                    <span v-if="cartItems.length > 0" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full px-2 py-0.5 font-bold border-2 border-black animate-pulse">{{cartItems.length}}</span>
+                </button>
+            </div>
+        </div>
+    </nav>
     
+   </div> 
 </body>
 </html>
